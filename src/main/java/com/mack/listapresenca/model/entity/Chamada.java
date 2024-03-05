@@ -13,11 +13,17 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
-@Table
+@Table(name = "chamada", schema = "presencas")
 @Entity
 @Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class Chamada {
 
 	@Id
@@ -26,7 +32,7 @@ public class Chamada {
 	private Long id;
 	
 	@ManyToOne
-	@JoinColumn(name = "id_usuario")
+	@JoinColumn(name = "id_aluno")
 	private Aluno aluno;
 	
 	@Column(name = "presente")

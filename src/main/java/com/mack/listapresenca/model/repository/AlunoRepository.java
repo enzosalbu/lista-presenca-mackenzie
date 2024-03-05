@@ -6,5 +6,5 @@ import com.mack.listapresenca.model.entity.Aluno;
 
 public interface AlunoRepository extends JpaRepository<Aluno, Long>{
 	
-
+	
 }

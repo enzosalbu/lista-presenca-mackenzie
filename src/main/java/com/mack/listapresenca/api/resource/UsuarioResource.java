@@ -14,15 +14,16 @@ import com.mack.listapresenca.exception.RegraNegocioException;
 import com.mack.listapresenca.model.entity.Usuario;
 import com.mack.listapresenca.service.UsuarioService;
 
+import lombok.RequiredArgsConstructor;
+
 @RestController
 @RequestMapping("/api/usuarios")
+@RequiredArgsConstructor
 public class UsuarioResource {
 
-	private UsuarioService service;
+	private final UsuarioService service;
 	
-	public UsuarioResource(UsuarioService service) {
-		this.service = service;
-	}
+	
 	
 	@PostMapping("/autenticar")
 	public ResponseEntity autenticar(@RequestBody UsuarioDTO dto) {	
