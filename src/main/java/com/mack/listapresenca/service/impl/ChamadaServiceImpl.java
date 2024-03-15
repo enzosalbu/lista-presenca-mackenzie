@@ -1,6 +1,7 @@
 package com.mack.listapresenca.service.impl;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -26,6 +27,7 @@ public class ChamadaServiceImpl implements ChamadaService{
 	@Transactional
 	public Chamada salvar(Chamada chamada) {
 		validar(chamada);
+		chamada.setPresente(true);
 		return repository.save(chamada);
 	}
 
@@ -33,6 +35,7 @@ public class ChamadaServiceImpl implements ChamadaService{
 	@Transactional
 	public Chamada realizar(Chamada chamada) {
 		Objects.requireNonNull(chamada.getId());
+		validar(chamada);
 		return repository.save(chamada);
 	}
 
@@ -55,7 +58,7 @@ public class ChamadaServiceImpl implements ChamadaService{
 		if(chamada.getData() == null) {
 			throw new RegraNegocioException("Informe uma data válida");
 		}
-	}
+		}
 	
 	@Override
 	public Optional<Chamada> obterPorId(Long id) {
