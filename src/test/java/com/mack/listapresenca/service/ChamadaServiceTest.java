@@ -95,9 +95,7 @@ public class ChamadaServiceTest {
 	@Test 
 	public void deveFiltrarChamadas() {
 		Chamada chamada = ChamadaRepositoryTest.criarChamada();
-		chamada.setId(1l);
-		
-		
+		chamada.setId(1l);		
 		List<Chamada> lista = Arrays.asList(chamada);
 		Mockito.when(repository.findAll(Mockito.any(Example.class), eq(Sort.by("aluno.nome")))).thenReturn(lista);
 		
@@ -108,7 +106,6 @@ public class ChamadaServiceTest {
 				.hasSize(1)
 				.contains(chamada);
 		}
-	
 	@Test
 	public void deveAtualizarStatusChamadas() {
 		Chamada chamada = ChamadaRepositoryTest.criarChamada();
