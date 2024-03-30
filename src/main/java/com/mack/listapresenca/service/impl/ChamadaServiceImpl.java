@@ -1,12 +1,15 @@
 package com.mack.listapresenca.service.impl;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
 import org.springframework.data.domain.Example;
+import org.springframework.data.domain.ScrollPosition.Direction;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -33,7 +36,7 @@ public class ChamadaServiceImpl implements ChamadaService{
 
 	@Override
 	@Transactional
-	public Chamada realizar(Chamada chamada) {
+	public Chamada atualizar(Chamada chamada) {
 		Objects.requireNonNull(chamada.getId());
 		validar(chamada);
 		return repository.save(chamada);
@@ -43,13 +46,20 @@ public class ChamadaServiceImpl implements ChamadaService{
 	@Transactional(readOnly = true)
 	public List<Chamada> buscar(Chamada chamadaFiltro) {
 		 Example example = Example.of(chamadaFiltro);
-		return repository.findAll(example);
+		return repository.findAll(example, Sort.by("aluno.nome"));
 	}
 
 	@Override
-	public void atualizarStatus(Chamada chamada, Boolean presente) {
-		chamada.setPresente(presente);
-		realizar(chamada);
+	public void atualizarStatus(Chamada chamada) {
+		boolean valor;
+		if(chamada.getPresente() == true) {
+			valor = false;
+		}else {
+			valor = true;
+			chamada.setMotivo(null);
+		}
+		chamada.setPresente(valor);
+		atualizar(chamada);
 	
 	}
 
@@ -67,7 +77,7 @@ public class ChamadaServiceImpl implements ChamadaService{
 	}
 	@Override
 	@Transactional(readOnly = true)
-	public BigDecimal obterPresensaPorAluno(Long id) {
+	public String obterPresensaPorAluno(Long id) {
 		BigDecimal presencas = repository.obterPresencaPorAluno(id, true);
 		BigDecimal faltas = repository.obterPresencaPorAluno(id, false);
 		if (presencas == null) {
@@ -77,7 +87,9 @@ public class ChamadaServiceImpl implements ChamadaService{
 			faltas = BigDecimal.ZERO;
 		}
 		BigDecimal total = presencas.add(faltas);
-		return presencas.divide(total);
+		BigDecimal valor = presencas.divide(total, 2, RoundingMode.HALF_UP);
+		BigDecimal percent = valor.multiply(new BigDecimal("100"));
+		return percent.toString() + '%';
 	}
 
 	

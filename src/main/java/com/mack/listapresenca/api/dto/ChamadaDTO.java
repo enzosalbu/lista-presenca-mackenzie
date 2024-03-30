@@ -14,4 +14,5 @@ public class ChamadaDTO {
 	private Long aluno;
 	private Boolean presente;
 	private LocalDate data;
+	private String motivo;
 }

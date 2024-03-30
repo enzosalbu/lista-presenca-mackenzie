@@ -34,7 +34,7 @@ public class AlunoResource {
 			if(!aluno.isPresent()) {
 				return new ResponseEntity(HttpStatus.NOT_FOUND);
 			}
-			BigDecimal taxa = chamadaService.obterPresensaPorAluno(id);
+			String taxa = chamadaService.obterPresensaPorAluno(id);
 			return ResponseEntity.ok(taxa);
 		}		
 }

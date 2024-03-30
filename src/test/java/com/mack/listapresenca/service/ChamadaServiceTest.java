@@ -1,9 +1,12 @@
 package com.mack.listapresenca.service;
 
+import static org.mockito.ArgumentMatchers.eq;
+
 import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
+import org.springframework.data.domain.Sort;
 
 import org.assertj.core.api.Assertions;
 
@@ -73,7 +76,7 @@ public class ChamadaServiceTest {
 		
 		Mockito.when(repository.save(chamadaSalva)).thenReturn(chamadaSalva);
 		
-		service.realizar(chamadaSalva);
+		service.atualizar(chamadaSalva);
 		
 		Mockito.verify(repository, Mockito.times(1)).save(chamadaSalva);
 	}
@@ -83,7 +86,7 @@ public class ChamadaServiceTest {
 		Chamada chamadaASalvar = ChamadaRepositoryTest.criarChamada();
 		
 		
-		Assertions.catchThrowableOfType(() -> service.realizar(chamadaASalvar), NullPointerException.class);
+		Assertions.catchThrowableOfType(() -> service.atualizar(chamadaASalvar), NullPointerException.class);
 		
 		Mockito.verify(repository, Mockito.never()).save(chamadaASalvar);
 		
@@ -94,11 +97,11 @@ public class ChamadaServiceTest {
 		Chamada chamada = ChamadaRepositoryTest.criarChamada();
 		chamada.setId(1l);
 		
+		
 		List<Chamada> lista = Arrays.asList(chamada);
-		Mockito.when(repository.findAll(Mockito.any(Example.class)) ).thenReturn(lista);
+		Mockito.when(repository.findAll(Mockito.any(Example.class), eq(Sort.by("aluno.nome")))).thenReturn(lista);
 		
 		List<Chamada> resultado = service.buscar(chamada);
-		
 		Assertions
 				.assertThat(resultado)
 				.isNotEmpty()
@@ -110,13 +113,12 @@ public class ChamadaServiceTest {
 	public void deveAtualizarStatusChamadas() {
 		Chamada chamada = ChamadaRepositoryTest.criarChamada();
 		chamada.setId(1l);
-		Mockito.doReturn(chamada).when(service).realizar(chamada);
+		Mockito.doReturn(chamada).when(service).atualizar(chamada);
 				
 		
-		service.atualizarStatus(chamada, false);
-		
+		service.atualizarStatus(chamada);
 		Assertions.assertThat(chamada.getPresente()).isEqualTo(false);
-		Mockito.verify(service).realizar(chamada);
+		Mockito.verify(service).atualizar(chamada);
 
 	}
 	@Test

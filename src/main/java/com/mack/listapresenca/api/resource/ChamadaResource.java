@@ -33,14 +33,34 @@ public class ChamadaResource {
 	private final AlunoService alunoService;
 
 	@GetMapping
-	public ResponseEntity buscar(@RequestParam("data") LocalDate data) {
+	public ResponseEntity buscar(@RequestParam("data") LocalDate data, @RequestParam(value = "turma", required = false) String turma) {
 		 	Chamada chamadaFiltro = new Chamada();
 		 	chamadaFiltro.setData(data);
-		 	
+		 	chamadaFiltro.setTurma(turma);
 		 	List<Chamada> chamadas = service.buscar(chamadaFiltro);
 		 	return ResponseEntity.ok(chamadas);
 			
 	}
+	
+	@GetMapping("{id}")
+	public ResponseEntity obterChamada(@PathVariable("id") Long id) {
+			return service.obterPorId(id)
+					.map(chamada -> new ResponseEntity(converterDTO(chamada), HttpStatus.OK))
+					.orElseGet(() -> new ResponseEntity(HttpStatus.NOT_FOUND));
+	}
+	
+	@PutMapping("{id}/realiza-chamada")
+	public ResponseEntity realizarChamada(@PathVariable("id")Long id) {
+		
+		return service.obterPorId(id).map(chamada -> {
+			try {
+					service.atualizarStatus(chamada);
+					return ResponseEntity.ok(chamada);					
+			} catch (RegraNegocioException e) {
+				return ResponseEntity.badRequest().body(e.getMessage());
+			}
+			}).orElseGet( () -> new ResponseEntity("Chamada não encontrada na base de Dados.", HttpStatus.BAD_REQUEST));   
+		}
 	
 	@PostMapping
 	public ResponseEntity salvar(@RequestBody ChamadaDTO dto) {
@@ -55,13 +75,13 @@ public class ChamadaResource {
 	}
 	
 	@PutMapping("{id}")
-	public ResponseEntity realizar(@PathVariable("id") Long id,@RequestBody ChamadaDTO dto) {
+	public ResponseEntity atualizar(@PathVariable("id") Long id,@RequestBody ChamadaDTO dto) {
 		
 	return service.obterPorId(id).map(entity -> {
 		try {
 				Chamada chamada = converter(dto);
 				chamada.setId(entity.getId());
-				service.realizar(chamada);
+				service.atualizar(chamada);
 				return ResponseEntity.ok(chamada);					
 		} catch (RegraNegocioException e) {
 			return ResponseEntity.badRequest().body(e.getMessage());
@@ -69,13 +89,11 @@ public class ChamadaResource {
 		}).orElseGet( () -> new ResponseEntity("Chamada não encontrada na base de Dados.", HttpStatus.BAD_REQUEST));   
 	}
 	
-	@PutMapping("{id}/realiza-chamada")
-	public ResponseEntity realizarChamada(@PathVariable("id")Long id, @RequestBody RealizaChamadaDTO dto) {
-		return service.obterPorId(id).map(entity -> {
-			entity.setPresente(dto.getPresente());
-			service.realizar(entity);
-			return ResponseEntity.ok(entity);
-		}).orElseGet( () -> new ResponseEntity("Chamada não encontrada na base de Dados.", HttpStatus.BAD_REQUEST));
+	
+		
+	
+	private ChamadaDTO converterDTO(Chamada chamada) {
+		return ChamadaDTO.builder().id(chamada.getId()).aluno(chamada.getAluno().getId()).data(chamada.getData()).presente(chamada.getPresente()).motivo(chamada.getMotivo()).build();
 	}
 	
 	private Chamada converter(ChamadaDTO dto) {
@@ -83,8 +101,10 @@ public class ChamadaResource {
 		chamada.setId(dto.getId());
 		chamada.setPresente(dto.getPresente());
 		chamada.setData(dto.getData());
+		chamada.setMotivo(dto.getMotivo());
 		Aluno aluno = alunoService.obterPorId(dto.getAluno()).orElseThrow(() -> new RegraNegocioException("Aluno não encontrado para o Id informado."));
 		chamada.setAluno(aluno);
+		chamada.setTurma(aluno.getTurma());
 		
 		return chamada;
 	}

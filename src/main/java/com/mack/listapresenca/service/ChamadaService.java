@@ -10,16 +10,16 @@ public interface ChamadaService {
 	
 	Chamada salvar(Chamada chamada);
 		
-	Chamada realizar(Chamada chamada);
+	Chamada atualizar(Chamada chamada);
 	
 	List<Chamada> buscar(Chamada chamadaFiltro);
 	
-	void atualizarStatus(Chamada chamada, Boolean presente);
+	void atualizarStatus(Chamada chamada);
 	
 	void validar(Chamada chamada);
 	
 	Optional<Chamada> obterPorId(Long id);
 	
-	BigDecimal obterPresensaPorAluno(Long id);
+	String obterPresensaPorAluno(Long id);
 
 }

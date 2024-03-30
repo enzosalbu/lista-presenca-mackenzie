@@ -13,6 +13,8 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
+
+import com.mack.listapresenca.model.entity.Aluno;
 import com.mack.listapresenca.model.entity.Chamada;
 
 @ExtendWith(SpringExtension.class)
@@ -63,6 +65,10 @@ public class ChamadaRepositoryTest {
 		
 	}
 	public static Chamada criarChamada() {
-		return Chamada.builder().data(LocalDate.now()).build();
+		return Chamada.builder().data(LocalDate.now()).presente(true).aluno(criarAluno()).build();
+	}
+	public static Aluno criarAluno() {
+		return Aluno.builder().nome("Teste").build();
+		
 	}
 }

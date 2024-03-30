@@ -35,6 +35,12 @@ public class Chamada {
 	@JoinColumn(name = "id_aluno")
 	private Aluno aluno;
 	
+	@Column(name = "turma")
+	private String turma;
+	
+	@Column(name = "motivo")
+	private String motivo;
+	
 	@Column(name = "presente")
 	private Boolean presente;
 	
