@@ -9,6 +9,8 @@ import com.mack.listapresenca.model.entity.Aluno;
 import com.mack.listapresenca.model.repository.AlunoRepository;
 import com.mack.listapresenca.service.AlunoService;
 
+import jakarta.transaction.Transactional;
+
 @Service
 public class AlunoServiceImpl implements  AlunoService {
 
@@ -23,6 +25,12 @@ public class AlunoServiceImpl implements  AlunoService {
 	@Override
 	public Optional<Aluno> obterPorId(Long id) {
 		return repository.findById(id);
+	}
+
+	@Override
+	@Transactional
+	public Aluno salvarAluno(Aluno aluno) {
+		return repository.save(aluno);
 	}
 	
 }

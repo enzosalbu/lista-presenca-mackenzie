@@ -9,10 +9,16 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.mack.listapresenca.api.dto.AlunoDTO;
+import com.mack.listapresenca.api.dto.UsuarioDTO;
+import com.mack.listapresenca.exception.RegraNegocioException;
 import com.mack.listapresenca.model.entity.Aluno;
+import com.mack.listapresenca.model.entity.Usuario;
 import com.mack.listapresenca.service.AlunoService;
 import com.mack.listapresenca.service.ChamadaService;
 
@@ -39,4 +45,18 @@ public class AlunoResource {
 			String taxa = chamadaService.obterPresensaPorAluno(id);
 			return ResponseEntity.ok(taxa);
 		}		
+		@PostMapping
+		public ResponseEntity salvar(@RequestBody AlunoDTO dto) {
+			Aluno aluno = Aluno.builder()
+					.nome(dto.getNome())
+					.turma(dto.getTurma()).build();
+			
+			try {
+				Aluno alunoSalvo = service.salvarAluno(aluno);
+				return new ResponseEntity(alunoSalvo, HttpStatus.CREATED);
+			} catch (RegraNegocioException e) {
+				return ResponseEntity.badRequest().body(e.getMessage());
+			}
+			
+		}
 }

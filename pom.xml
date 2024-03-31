@@ -14,7 +14,7 @@
 	<name>listapresenca</name>
 	<description>Projeto para lista de presença</description>
 	<properties>
-		<java.version>1.8</java.version>
+		<java.version>17</java.version>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -68,16 +68,21 @@
 			<plugin>
     	<groupId>org.apache.maven.plugins</groupId>
     	<artifactId>maven-compiler-plugin</artifactId>
-    <configuration>
-		<archive>
-          <manifest>
-            <addClasspath>true</addClasspath>
-            <classpathPrefix>lib/</classpathPrefix>
-            <mainClass>com.mypackage.MyClass</mainClass>
-          </manifest>
-        </archive>
-        <release>22</release>
-    </configuration>
+    
+  
+    
+</plugin>
+
+<plugin>
+				<groupId>com.heroku.sdk</groupId>
+				<artifactId>heroku-maven-plugin</artifactId>
+				<version>3.0.7</version>
+				<configuration>
+					<appName>lista-presenca-api</appName>
+					<processTypes>
+						<web>java $JAVA_OPTS -Dserver.port=$PORT -cp target/classes:target/dependency/* com.mack.listapresenca.ListapresencaApplication</web>
+</processTypes>	
+</configuration>
 </plugin>
 		</plugins>
 		</pluginManagement>
