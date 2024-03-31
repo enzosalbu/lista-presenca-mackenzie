@@ -27,7 +27,7 @@ public class UsuarioResource {
 	
 	
 	
-	@PostMapping("/autenticar")
+	@PostMapping("autenticar")
 	public ResponseEntity autenticar(@RequestBody UsuarioDTO dto) {	
 		try {
 			Usuario usuarioAutenticado = service.autenticar(dto.getEmail(), dto.getSenha());
