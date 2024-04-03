@@ -1,6 +1,7 @@
 package com.mack.listapresenca.api.resource;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.http.HttpStatus;
@@ -64,6 +65,28 @@ public class ChamadaResource {
 			}).orElseGet( () -> new ResponseEntity("Chamada não encontrada na base de Dados.", HttpStatus.BAD_REQUEST));   
 		}
 	
+	@PostMapping("/salvar-lista")
+	public ResponseEntity salvarChamadaTodosAlunos(@RequestParam("data") LocalDate data) {
+		
+		try {
+			List<Aluno> alunos = alunoService.buscar();
+			List<Chamada> chamadas = new ArrayList<Chamada>();
+			
+			for(Aluno aluno : alunos) {
+				Chamada chamada = new Chamada();
+				chamada.setData(data);
+				chamada.setAluno(aluno);
+				chamada.setPresente(true);
+				chamada.setTurma(aluno.getTurma());
+				chamadas.add(chamada);			
+			}
+			chamadas = service.salvarLista(chamadas);
+			return new ResponseEntity(chamadas, HttpStatus.CREATED);
+		} catch (RegraNegocioException e) {
+			return ResponseEntity.badRequest().body(e.getMessage());
+		}
+	}
+	
 	@PostMapping
 	public ResponseEntity salvar(@RequestBody ChamadaDTO dto) {
 		
@@ -75,6 +98,8 @@ public class ChamadaResource {
 			return ResponseEntity.badRequest().body(e.getMessage());
 		}
 	}
+	
+	
 	
 	@PutMapping("{id}")
 	public ResponseEntity atualizar(@PathVariable("id") Long id,@RequestBody ChamadaDTO dto) {

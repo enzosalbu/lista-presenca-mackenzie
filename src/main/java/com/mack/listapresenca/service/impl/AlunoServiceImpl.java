@@ -1,15 +1,16 @@
 package com.mack.listapresenca.service.impl;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
+import org.springframework.transaction.annotation.Transactional;
 import com.mack.listapresenca.model.entity.Aluno;
 import com.mack.listapresenca.model.repository.AlunoRepository;
 import com.mack.listapresenca.service.AlunoService;
 
-import jakarta.transaction.Transactional;
+
 
 @Service
 public class AlunoServiceImpl implements  AlunoService {
@@ -32,5 +33,13 @@ public class AlunoServiceImpl implements  AlunoService {
 	public Aluno salvarAluno(Aluno aluno) {
 		return repository.save(aluno);
 	}
+	
+	@Override
+	@Transactional(readOnly = true)
+	public List<Aluno> buscar() {
+		return repository.findAll();
+	}
+
+	
 	
 }

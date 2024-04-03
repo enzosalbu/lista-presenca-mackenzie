@@ -9,7 +9,9 @@ import com.mack.listapresenca.model.entity.Chamada;
 public interface ChamadaService {
 	
 	Chamada salvar(Chamada chamada);
-		
+	
+	List<Chamada> salvarLista(List<Chamada> chamadas);
+	
 	Chamada atualizar(Chamada chamada);
 	
 	List<Chamada> buscar(Chamada chamadaFiltro);

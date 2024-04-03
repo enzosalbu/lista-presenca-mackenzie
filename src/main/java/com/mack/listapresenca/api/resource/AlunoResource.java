@@ -1,6 +1,8 @@
 package com.mack.listapresenca.api.resource;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.util.List;
 import java.util.Optional;
 
 import org.apache.catalina.connector.Response;
@@ -12,12 +14,14 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.mack.listapresenca.api.dto.AlunoDTO;
 import com.mack.listapresenca.api.dto.UsuarioDTO;
 import com.mack.listapresenca.exception.RegraNegocioException;
 import com.mack.listapresenca.model.entity.Aluno;
+import com.mack.listapresenca.model.entity.Chamada;
 import com.mack.listapresenca.model.entity.Usuario;
 import com.mack.listapresenca.service.AlunoService;
 import com.mack.listapresenca.service.ChamadaService;
@@ -59,4 +63,13 @@ public class AlunoResource {
 			}
 			
 		}
+		
+		@GetMapping("/buscar")
+		public ResponseEntity buscar() {			 	
+			 try {	List<Aluno> alunos = service.buscar();
+			 	return ResponseEntity.ok(alunos);
+			 }catch (RegraNegocioException e) {
+					return ResponseEntity.badRequest().body(e.getMessage());
+		}
+}
 }

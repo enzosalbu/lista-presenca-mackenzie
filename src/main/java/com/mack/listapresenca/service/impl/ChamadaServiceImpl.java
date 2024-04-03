@@ -33,6 +33,12 @@ public class ChamadaServiceImpl implements ChamadaService{
 		chamada.setPresente(true);
 		return repository.save(chamada);
 	}
+	
+	@Override
+	@Transactional
+	public List<Chamada> salvarLista(List<Chamada> chamadas) {
+		return  repository.saveAll(chamadas);
+	}
 
 	@Override
 	@Transactional
@@ -46,6 +52,8 @@ public class ChamadaServiceImpl implements ChamadaService{
 	@Transactional(readOnly = true)
 	public List<Chamada> buscar(Chamada chamadaFiltro) {
 		 Example example = Example.of(chamadaFiltro);
+		 
+		 
 		return repository.findAll(example, Sort.by("aluno.nome"));
 	}
 
