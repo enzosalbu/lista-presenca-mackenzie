@@ -6,7 +6,7 @@ export default (props) => {
         return(
             <tr key={aluno.id}>
                 <td>{aluno.aluno.nome}</td>
-                <td>{aluno.aluno.turma}</td>
+                
                 <td>{String(aluno.presente) === 'true' ? 
                       (
                         <button type="button" title="Presente" className="btn btn-success" onClick={e => props.marcarAction(aluno)}>P</button>

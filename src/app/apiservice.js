@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const httpClient = axios.create({
-    baseURL: 'https://lista-presenca-api-deb812641cc5.herokuapp.com'
+    baseURL: 'http://localhost:8080'
 
 })
 
