@@ -1,17 +1,12 @@
 import React from "react";
-import AlunoService from "../app/service/alunoService"
 import AuthService from "../app/service/authService";
 
 class Home extends React.Component{
     state = {
-        frequencia: 0,
         professor: ''
     }
 
-    constructor(){
-        super();
-        this.service = new AlunoService(); 
-    }
+    
 
     componentDidMount(){
        const usuarioLogado = AuthService.obterUsuarioAutenticadoJSON();

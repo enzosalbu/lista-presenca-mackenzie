@@ -1,6 +1,7 @@
 import React from "react";
 import Login from "../views/login";
 import CadastroUsuario from "../views/cadastroUsuario";
+import CadastroAluno from "../views/alunos/cadastroAluno";
 import Home from '../views/home'
 import RegistroPresencas from "../views/presencas/registro-presencas";
 import {Route, Switch, HashRouter, Redirect  } from 'react-router-dom'
@@ -29,8 +30,8 @@ function Rotas(props){
             <Switch>
                 <Route path="/login" component={Login}/>
                 <Route path="/cadastro-usuarios" component={CadastroUsuario}/>
-
                 <Route  path="/home" component={Home}/>
+                <RotaAutenticada isUsuarioAutenticado={props.isUsuarioAutenticado} path="/alunos" component={CadastroAluno}/>
                 <RotaAutenticada isUsuarioAutenticado={props.isUsuarioAutenticado} path="/registro-presencas" component={RegistroPresencas}/>
             </Switch>
         </HashRouter>

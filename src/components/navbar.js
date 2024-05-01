@@ -3,9 +3,6 @@ import NavBarItem from "./navbarItem";
 import { AuthConsumer } from "../main/provedorAutenticacao";
 import logo from "../imgs/logo.png"
 
-
-
-
 function NavBar(props){
     return(
         <div className="navbar navbar-expand-lg fixed-top navbar-dark bg-primary">
@@ -21,6 +18,7 @@ function NavBar(props){
             <ul className="navbar-nav">
               <NavBarItem render={props.isUsuarioAutenticado} href="#/home" label="Home"/>
               <NavBarItem render={props.isUsuarioAutenticado} href="#/registro-presencas" label="Registrar Presenças"/>
+              <NavBarItem render={props.isUsuarioAutenticado} href="#/alunos" label="Alunos"/>
               <NavBarItem render={props.isUsuarioAutenticado} onClick={props.deslogar} href="#/login" label="Sair"/>
             </ul>
           </div>
