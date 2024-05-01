@@ -1,10 +1,11 @@
 import React from "react";
 import AlunoService from "../../app/service/alunoService";
 import Card from "../../components/card";
-import selectMenu from "../../components/selectMenu";
+import SelectMenu from "../../components/selectMenu";
 import { Dialog } from "primereact/dialog";
 import FormGroup from "../../components/form-group";
 import * as messages from "../../components/toastr"
+import AlunosTable from "./alunosTable";
 
 
 class CadastroAluno extends React.Component{
@@ -66,7 +67,7 @@ class CadastroAluno extends React.Component{
                     <div className="row">
                             <div className="col-md-12">
                                 <div className="bs-component">
-                                    <PresencasTable alunos={this.state.alunos}/>
+                                    <AlunosTable alunos={this.state.alunos}/>
                                 </div>
                             </div>
                         </div>

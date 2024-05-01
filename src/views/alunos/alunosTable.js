@@ -5,10 +5,9 @@ export default (props) => {
 
         return(
             <tr key={aluno.id}>
-                <td>{aluno.aluno.nome}</td>
-                <td>{aluno.aluno.turma}</td>
-                <td>{aluno.aluno.email}</td>
-                <td>{aluno.aluno.frequencia}</td>
+                <td>{aluno.nome}</td>
+                <td>{aluno.turma}</td>
+                <td>{aluno.email}</td>
                 
             </tr>
         )
@@ -22,7 +21,6 @@ export default (props) => {
                       <th scope="col">Aluno</th>
                       <th scope="col">Turma</th>
                       <th scope="col">Email</th>
-                      <th scope="col">Frequência</th>
                 </tr>
             </thead>
             <tbody>

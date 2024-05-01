@@ -17,7 +17,7 @@ class AlunoService extends ApiService{
          ]
      }
     consultar(alunoFiltro){
-        let params;
+        let params = '';
         if(alunoFiltro.turma){
             params = `?turma=${alunoFiltro.turma}`;
         }
