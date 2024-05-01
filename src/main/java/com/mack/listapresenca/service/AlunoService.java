@@ -8,5 +8,5 @@ import com.mack.listapresenca.model.entity.Usuario;
 public interface AlunoService {
 		Optional<Aluno> obterPorId(Long id);
 		Aluno salvarAluno(Aluno aluno);
-		List<Aluno> buscar();
+		List<Aluno> buscar(Aluno alunoFiltro);
 }

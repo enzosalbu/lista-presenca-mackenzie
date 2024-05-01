@@ -21,16 +21,20 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class Aluno {
 	
+	
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")
-	private long id;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
 	
 	@Column(name = "nome")
 	private String nome;
 	
 	@Column(name = "turma")
 	private String turma;
+	
+	@Column(name = "email")
+	private String email;
 
 	
 }

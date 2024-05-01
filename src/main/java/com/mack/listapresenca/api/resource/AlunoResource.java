@@ -64,12 +64,17 @@ public class AlunoResource {
 			
 		}
 		
-		@GetMapping("/buscar")
-		public ResponseEntity buscar() {			 	
-			 try {	List<Aluno> alunos = service.buscar();
-			 	return ResponseEntity.ok(alunos);
+		@GetMapping
+		public ResponseEntity buscar(@RequestParam(value = "turma", required = false) String turma) {			 	
+			Aluno alunoFiltro = new Aluno();
+			alunoFiltro.setTurma(turma);
+			 try {	
+				 List<Aluno> alunos = service.buscar(alunoFiltro);
+				 System.out.println(alunoFiltro);
+			 	 return ResponseEntity.ok(alunos);
 			 }catch (RegraNegocioException e) {
 					return ResponseEntity.badRequest().body(e.getMessage());
 		}
 }
+		
 }

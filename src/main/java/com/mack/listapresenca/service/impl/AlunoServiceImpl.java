@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Example;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import com.mack.listapresenca.model.entity.Aluno;
@@ -36,8 +38,10 @@ public class AlunoServiceImpl implements  AlunoService {
 	
 	@Override
 	@Transactional(readOnly = true)
-	public List<Aluno> buscar() {
-		return repository.findAll();
+	public List<Aluno> buscar(Aluno alunoFiltro) {
+		Example example = Example.of(alunoFiltro);		 
+		return repository.findAll(example, Sort.by("nome"));
+		
 	}
 
 	

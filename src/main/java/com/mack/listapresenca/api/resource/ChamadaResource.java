@@ -36,11 +36,12 @@ public class ChamadaResource {
 	private final AlunoService alunoService;
 
 	@GetMapping
-	public ResponseEntity buscar(@RequestParam("data") LocalDate data, @RequestParam(value = "turma", required = false) String turma) {
+	public ResponseEntity buscar(@RequestParam(value = "data", required = false) LocalDate data, @RequestParam(value = "turma", required = false) String turma) {
 		 	Chamada chamadaFiltro = new Chamada();
 		 	chamadaFiltro.setData(data);
 		 	chamadaFiltro.setTurma(turma);
 		 	List<Chamada> chamadas = service.buscar(chamadaFiltro);
+		 	System.out.println(chamadaFiltro);
 		 	return ResponseEntity.ok(chamadas);
 			
 	}
@@ -67,9 +68,9 @@ public class ChamadaResource {
 	
 	@PostMapping("/salvar-lista")
 	public ResponseEntity salvarChamadaTodosAlunos(@RequestParam("data") LocalDate data) {
-		
+		Aluno alunoFiltro = new Aluno();
 		try {
-			List<Aluno> alunos = alunoService.buscar();
+			List<Aluno> alunos = alunoService.buscar(alunoFiltro);
 			List<Chamada> chamadas = new ArrayList<Chamada>();
 			
 			for(Aluno aluno : alunos) {
