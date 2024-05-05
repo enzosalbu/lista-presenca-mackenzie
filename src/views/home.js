@@ -14,11 +14,9 @@ class Home extends React.Component{
         this.setState({ professor: `, ${usuarioLogado.nome}`}) 
        }              
     }
-
     render(){
         
-        return(
-                  
+        return(                
             <div id="homeBody" className="jumbotron">
                 <h1 className="display-3">Bem vindo{this.state.professor}!</h1>
                 <p className="lead">Esse é seu sistema Apreender.</p>

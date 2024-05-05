@@ -23,6 +23,12 @@ class AlunoService extends ApiService{
         }
         return this.get(params);
     }
+    salvar(aluno){
+        return this.post('', aluno);
+    }
+    obterFrequencia(id){
+        return this.get(`/${id}`);
+    }
     
 }
 

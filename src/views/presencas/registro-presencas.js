@@ -42,7 +42,7 @@ class RegistroPresencas extends React.Component{
         .then( response => {
             const lista = response.data;
             if(lista.length < 1){
-                messages.mensagmeAlerta("Nenhuma aula encontrada")
+                messages.mensagemAlerta("Nenhuma aula encontrada")
             }
             this.setState({alunos: lista})
             
