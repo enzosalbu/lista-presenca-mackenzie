@@ -15,6 +15,5 @@ public class AlunoDTO {
 
 		private String nome;
 		private String turma;
-		private String email;
-	
+		private String email;	
 }

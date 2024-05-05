@@ -42,8 +42,6 @@ public class AlunoServiceImpl implements  AlunoService {
 		Example example = Example.of(alunoFiltro);		 
 		return repository.findAll(example, Sort.by("nome"));
 		
-	}
-
-	
+	}	
 	
 }
