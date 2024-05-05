@@ -51,9 +51,7 @@ public class ChamadaServiceImpl implements ChamadaService{
 	@Override
 	@Transactional(readOnly = true)
 	public List<Chamada> buscar(Chamada chamadaFiltro) {
-		 Example example = Example.of(chamadaFiltro);
-		 
-		 
+		 Example example = Example.of(chamadaFiltro);		 
 		return repository.findAll(example, Sort.by("aluno.nome"));
 	}
 
@@ -95,10 +93,13 @@ public class ChamadaServiceImpl implements ChamadaService{
 			faltas = BigDecimal.ZERO;
 		}
 		BigDecimal total = presencas.add(faltas);
-		BigDecimal valor = presencas.divide(total, 2, RoundingMode.HALF_UP);
+		BigDecimal valor;
+		if (total.compareTo(BigDecimal.ZERO) != 0) {
+		    valor = presencas.divide(total, 2, RoundingMode.HALF_UP);	    
+		} else {
+		    valor = BigDecimal.ONE;		    
+		}		
 		BigDecimal percent = valor.multiply(new BigDecimal("100"));
 		return percent.toString() + '%';
 	}
-
-	
 }

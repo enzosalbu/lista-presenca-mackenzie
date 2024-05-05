@@ -41,7 +41,6 @@ public class ChamadaResource {
 		 	chamadaFiltro.setData(data);
 		 	chamadaFiltro.setTurma(turma);
 		 	List<Chamada> chamadas = service.buscar(chamadaFiltro);
-		 	System.out.println(chamadaFiltro);
 		 	return ResponseEntity.ok(chamadas);
 			
 	}

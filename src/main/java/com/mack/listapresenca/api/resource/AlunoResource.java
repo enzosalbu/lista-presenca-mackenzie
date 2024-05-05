@@ -53,6 +53,7 @@ public class AlunoResource {
 		public ResponseEntity salvar(@RequestBody AlunoDTO dto) {
 			Aluno aluno = Aluno.builder()
 					.nome(dto.getNome())
+					.email(dto.getEmail())
 					.turma(dto.getTurma()).build();
 			
 			try {
@@ -70,7 +71,6 @@ public class AlunoResource {
 			alunoFiltro.setTurma(turma);
 			 try {	
 				 List<Aluno> alunos = service.buscar(alunoFiltro);
-				 System.out.println(alunoFiltro);
 			 	 return ResponseEntity.ok(alunos);
 			 }catch (RegraNegocioException e) {
 					return ResponseEntity.badRequest().body(e.getMessage());
