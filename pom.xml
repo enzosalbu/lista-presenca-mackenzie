@@ -59,7 +59,7 @@
 	</dependencies>
 
 	<build>
-		<pluginManagement>
+		
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
@@ -67,10 +67,7 @@
 			</plugin>			
 			<plugin>
     	<groupId>org.apache.maven.plugins</groupId>
-    	<artifactId>maven-compiler-plugin</artifactId>
-    
-  
-    
+    	<artifactId>maven-compiler-plugin</artifactId>    
 </plugin>
 
 <plugin>
@@ -78,14 +75,14 @@
 				<artifactId>heroku-maven-plugin</artifactId>
 				<version>3.0.7</version>
 				<configuration>
-					<appName>lista-presenca-api</appName>
-					<processTypes>
-						<web>java $JAVA_OPTS -Dserver.port=$PORT -cp target/classes:target/dependency/* com.mack.listapresenca.ListapresencaApplication</web>
+				<appName>lista-presenca-api</appName>
+				<processTypes>
+				<web>java $JAVA_OPTS -Dserver.port=$PORT -cp target/classes:target/dependency/* com.mack.listapresenca.ListapresencaApplication</web>
 </processTypes>	
 </configuration>
 </plugin>
 		</plugins>
-		</pluginManagement>
+		
 	</build>
 
 </project>
