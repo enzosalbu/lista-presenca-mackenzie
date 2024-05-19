@@ -2,6 +2,8 @@ package com.mack.listapresenca.api.resource;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -51,13 +53,29 @@ public class AlunoResource {
 		}		
 		@PostMapping
 		public ResponseEntity salvar(@RequestBody AlunoDTO dto) {
+			
 			Aluno aluno = Aluno.builder()
 					.nome(dto.getNome())
 					.email(dto.getEmail())
-					.turma(dto.getTurma()).build();
+					.turma(dto.getTurma())
+					.data_cadastro(LocalDate.now()).
+					build();
+					
 			
 			try {
 				Aluno alunoSalvo = service.salvarAluno(aluno);
+				System.out.println(alunoSalvo.getId());
+				List<Chamada> chamadas = new ArrayList<Chamada>();
+				LocalDate today = alunoSalvo.getData_cadastro();
+				for(Integer i = 0; i < 7; i++) {
+					Chamada chamada = new Chamada();
+					chamada.setData(today.plusDays(i));
+					chamada.setAluno(alunoSalvo);
+					chamada.setPresente(true);
+					chamada.setTurma(alunoSalvo.getTurma());
+					chamadas.add(chamada);	
+				}
+				chamadas = chamadaService.salvarLista(chamadas);
 				return new ResponseEntity(alunoSalvo, HttpStatus.CREATED);
 			} catch (RegraNegocioException e) {
 				return ResponseEntity.badRequest().body(e.getMessage());

@@ -1,5 +1,7 @@
 package com.mack.listapresenca.model.entity;
 
+import java.time.LocalDate;
+import java.util.Date;
 import java.util.Objects;
 
 import jakarta.persistence.Column;
@@ -35,6 +37,9 @@ public class Aluno {
 	
 	@Column(name = "email")
 	private String email;
+	
+	@Column(name= "data_cadastro")
+	private LocalDate data_cadastro;
 
 	
 }
