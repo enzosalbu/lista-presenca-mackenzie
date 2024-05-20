@@ -10,6 +10,7 @@ import Rotas from "./rotas";
 import NavBar from "../components/navbar"
 import ProvedorAutenticacao from "./provedorAutenticacao"
 
+
 class App extends React.Component {
   render(){
     return(
@@ -18,6 +19,7 @@ class App extends React.Component {
         <NavBar/>
           <div className="container">
             <Rotas/>
+            
           </div>
           </ProvedorAutenticacao>   
     )

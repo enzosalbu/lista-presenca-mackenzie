@@ -27,9 +27,9 @@ export default (props) => {
             <thead>
                 <tr>
                       <th scope="col">Aluno</th>
-                      <th scope="col">Turma</th>
-                      <th scope="col">Presente</th>
+                      <th scope="col">Status</th>
                       <th scope="col">Motivo</th>
+                      <th scope="col"></th>
                 </tr>
             </thead>
             <tbody>

@@ -30,6 +30,7 @@ class Home extends React.Component{
                   href="#/cadastro-usuarios"
                    role="button"><i className="pi pi-pencil"></i>  Cadastrar Usuário</a>
                 </p>
+                
          </div>        
         )
     }
